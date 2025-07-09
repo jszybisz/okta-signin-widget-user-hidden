@@ -1,0 +1,16 @@
+.phone-authenticator-enroll {
+  .okta-form-subtitle {
+    text-align: center;
+  }
+  &__phone-code {
+    min-width: 3rem;
+    text-align: center;
+    vertical-align: middle;
+    // 2px top padding to align with phone number input text
+    padding: 0.125rem 0 0;
+  }
+  // Have to do this for more specificity than global hide
+  .hide {
+    display: none;
+  }
+}
