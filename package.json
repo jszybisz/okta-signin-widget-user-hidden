@@ -13,8 +13,7 @@
     "url": "https://github.com/okta/okta-signin-widget/issues"
   },
   "files": [
-    "target/js",
-    "target/css",
+    "target/**/*",
     "package.json",
     "README.md"
   ],
