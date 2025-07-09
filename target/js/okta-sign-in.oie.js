@@ -53960,11 +53960,12 @@ const Body = _internals.BaseForm.extend({
     // 1. Use username/identifier from the config.
     // 2. Use identifier value returned in remediation response (model will have this attr set if it's there)
     // 3. Use value from the "remember my username" cookie.
-    if (this._shouldAddUsername(uiSchema)) {
-      // Set username/identifier from the config (i.e. config.username)
+    if (this.options.settings.get('suppressIdentifierDisplay')) {
+      // 🔒 Don't set any identifier if suppression is enabled
+      this.model.set('identifier', '');
+    } else if (this._shouldAddUsername(uiSchema)) {
       this.model.set('identifier', this.settings.get('username'));
     } else if (!this.model.get('identifier') && this._shouldApplyRememberMyUsername(uiSchema)) {
-      // Use value from cookie if the remediation did not return identifier value.
       this._applyRememberMyUsername();
     }
   },
@@ -54046,6 +54047,9 @@ const Body = _internals.BaseForm.extend({
         ...schema
       };
       if (schema.name === 'identifier') {
+        if (this.options.settings.get('suppressIdentifierDisplay')) {
+          return null; // 🔒 Remove the field entirely
+        }
         if ((0, _i18nTransformer.isCustomizedI18nKey)(identifierExplainLabeli18nKey, settings)) {
           newSchema = {
             ...newSchema,
@@ -54083,7 +54087,7 @@ const Body = _internals.BaseForm.extend({
     if (this.settings.get('features.showKeepMeSignedIn') === false) {
       newSchemas = newSchemas.filter(schema => schema.name !== 'rememberMe');
     }
-    return newSchemas;
+    return newSchemas.filter(Boolean);
   },
   showCustomFormErrorCallout(error, messages) {
     var _error$responseJSON, _error$responseJSON$e;
