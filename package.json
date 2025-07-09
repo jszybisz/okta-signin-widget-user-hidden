@@ -12,6 +12,12 @@
   "bugs": {
     "url": "https://github.com/okta/okta-signin-widget/issues"
   },
+  "files": [
+    "target/js",
+    "target/css",
+    "package.json",
+    "README.md"
+  ],
   "browserslist": [
     "> 0.1%",
     "not opera < 69",
@@ -35,6 +41,7 @@
       "require": "./target/js/okta-sign-in.js",
       "default": "./target/js/okta-sign-in.js"
     },
+  
     "./classic": {
       "types": "./types/src/exports/classic.d.ts",
       "import": "./target/esm/src/exports/exports/classic.js",
